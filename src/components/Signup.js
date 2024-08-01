@@ -8,7 +8,7 @@ const Signup = (props) => {
     try {
       e.preventDefault();
       const { name, email, password } = credentials;
-      const response = await fetch("http://localhost:5000/api/auth/createUser", {
+      const response = await fetch("https://docs.render.com/web-services#port-binding/api/auth/createUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
