@@ -12,13 +12,6 @@ const port = process.env.PORT || 5000;
 
 app.use(cors())
 
-app.use(cors(
-  {
-    origin: ["https://deploy-mern-1whq.vercel.app"],
-    methods: ["POST", "GET"],
-    credentials: true
-  }
-))
 app.use(express.json()) // if we want to use json file we will have to put this
 
 
