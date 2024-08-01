@@ -7,7 +7,9 @@ import NoteState from "./context/notes/NoteState";
 import Alert from "./components/Alert";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
+import axios from "axios";
 import { useState } from "react";
+
 
 function App() {
   const [alert, setAlert] = useState(null);
