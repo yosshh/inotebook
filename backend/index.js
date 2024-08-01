@@ -7,6 +7,11 @@ connectToMongo();
 const app = express()
 const port = process.env.PORT || 5000;
 
+
+
+
+app.use(cors())
+
 app.use(cors(
   {
     origin: ["https://deploy-mern-1whq.vercel.app"],
@@ -14,9 +19,6 @@ app.use(cors(
     credentials: true
   }
 ))
-
-
-app.use(cors())
 app.use(express.json()) // if we want to use json file we will have to put this
 
 
