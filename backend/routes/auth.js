@@ -20,8 +20,6 @@ router.post(
     //  console.log(req.body);
     //  const user = User(req.body);
     //  user.save();
-    res.send(req.body);
-
     // below code is for identifying errors
     // if we go to thunderbolt and do not fill name it will show error
     // we can also give a custom message to the field as done in code 10 and 11 for name and email
@@ -31,6 +29,10 @@ router.post(
       return res.status(400).json({ success, errors: errors.array() });
     }
     try {
+      const userExists = await User.findOne({email: req.body.email});
+      if(userExists) {
+        return res.status(400).json({success, error: "User already exits"})
+      }
       const salt = await bcrypt.genSalt(10);
       const secPass = await bcrypt.hash(req.body.password, salt);
       // this upper code will generate a hash value for the password which will prevent the user file from hacking
@@ -43,7 +45,7 @@ router.post(
       const data = {
         user: {
           id: user.id,
-        },
+        }
       };
       const authToken = jwt.sign(data, JWT_SECRET);
       success = true;

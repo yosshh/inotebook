@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const Login = (props) => {
   let navigate = useNavigate();
-  const [crendentials, setCrendentials] = useState({ email: "", password: "" });
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch("http://localhost:5000/api/auth/login", {
@@ -12,8 +12,8 @@ const Login = (props) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: crendentials.email,
-        password: crendentials.password,
+        email: credentials.email,
+        password: credentials.password,
       }),
     });
     const json = await response.json();
@@ -28,7 +28,7 @@ const Login = (props) => {
     }
   };
   const onchange = (e) => {
-    setCrendentials({ ...crendentials, [e.target.name]: e.target.value });
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
   return (
     <div>
@@ -41,7 +41,7 @@ const Login = (props) => {
             type="email"
             name="email"
             className="form-control"
-            value={crendentials.email}
+            value={credentials.email}
             onChange={onchange}
             id="email"
             aria-describedby="emailHelp"
@@ -56,7 +56,7 @@ const Login = (props) => {
           </label>
           <input
             type="password"
-            value={crendentials.password}
+            value={credentials.password}
             name="password"
             onChange={onchange}
             className="form-control"

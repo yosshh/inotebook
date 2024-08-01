@@ -3,35 +3,40 @@ import { useNavigate } from "react-router-dom";
 
 const Signup = (props) => {
   let navigate = useNavigate();
-  const [crendentials, setCrendentials] = useState({name: "", email: "", password: "", cpassword: "" });
+  const [credentials, setcredentials] = useState({name: "", email: "", password: "", cpassword: "" });
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const {name, email, password} = crendentials;
-    const response = await fetch("http://localhost:5000/api/auth/createUser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({name, email, password})
-    });
-    const json = await response.json();
-    console.log(json);
-    if(json.succcess){
-      localStorage.setItem("auth-token", json.authToken);
-      props.showAlert("Account Created Successfully", "success")
-      navigate("/home");
-    } else {
-        props.showAlert("Invalid Credentials", "danger")
+    try {
+      e.preventDefault();
+      const { name, email, password } = credentials;
+      const response = await fetch("http://localhost:5000/api/auth/createUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+      const json = await response.json();
+      console.log(json);
+      if (json && json.success) {
+        localStorage.setItem("auth-token", json.authToken);
+        props.showAlert("Account Created Successfully", "success");
+        navigate("/home");
+      } else {
+        props.showAlert("Invalid Credentials", "danger");
+      }
+    } catch (error) {
+      console.error("Error creating account:", error);
+      props.showAlert("Failed to create account", "danger");
     }
   };
   const onchange = (e) => {
-    setCrendentials({ ...crendentials, [e.target.name]: e.target.value });
+    setcredentials({ ...credentials, [e.target.name]: e.target.value });
   };
   return (
     <div>
       <form className="container" onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="namw" className="form-label">
+          <label htmlFor="name" className="form-label">
             Name
           </label>
           <input
